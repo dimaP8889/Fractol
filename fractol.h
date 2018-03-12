@@ -21,4 +21,9 @@
 # include "libft/includes/get_next_line.h"
 # include "libft/ft_printf/ft_printf.h"
 
+typedef	struct 		s_fractol
+{
+	
+}					t_fractol;
+
 #endif

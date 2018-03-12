@@ -12,8 +12,8 @@
 
 NAME = ./fractol
 LIBA = libft/libft.a
-SRC = fractol.c
-HEADER = fdf.h
+SRC = fractol.c ft_jul_fract.c ft_men_fract.c
+HEADER = fractol.h
 FLAGS = -Wall -Wextra -Werror
 FLAGS_MLX = -lmlx
 MLX = minilibx/
