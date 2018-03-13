@@ -20,6 +20,7 @@ MLX = minilibx/
 CC = gcc
 FLAG_FRAME = -framework
 FRAMEWORK = $(FLAG_FRAME) OpenGL $(FLAG_FRAME) AppKit
+MULT = -lpthread
 
 comp:
-	$(CC) $(FLAGS) -o $(NAME) $(SRC) $(LIBA) -L $(MLX) $(FLAGS_MLX) $(FRAMEWORK)
+	$(CC) $(FLAGS) -o $(NAME) $(MULT) $(SRC) $(LIBA) -L $(MLX) $(FLAGS_MLX) $(FRAMEWORK)
