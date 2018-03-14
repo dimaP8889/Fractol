@@ -44,6 +44,10 @@ typedef	struct 		s_mult
 	int				y0;
 	int				y1;
 	int				*img_mas;
+	double			zoom;
+	double			move_x;
+	double			move_y;
+	int				iter;
 }					t_mult;
 
 typedef struct		s_mlx
