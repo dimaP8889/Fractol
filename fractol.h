@@ -24,6 +24,7 @@
 # include "libft/includes/libft.h"
 # include "libft/includes/get_next_line.h"
 # include "libft/ft_printf/ft_printf.h"
+#include <stdio.h>
 
 typedef	struct 		s_men
 {
@@ -54,10 +55,14 @@ typedef struct		s_mlx
 {
 	void			*mlx;
 	void			*wnd;
+	int				fractol;
+	t_mult			coord;
 	t_im			img;
 }					t_mlx;
 
-void	ft_jul_fract(t_mlx data);
-void	ft_men_fract(t_mlx data);
+int		ft_catch_key(int keycode, void *param);
+void	ft_jul_fract(t_mlx *data);
+void	ft_men_fract(t_mlx *data);
+int		mouse_zoom(int button, int x, int y, void *param);
 
 #endif

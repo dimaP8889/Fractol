@@ -41,6 +41,18 @@ void	ft_init_image(t_mlx *data)
 	&(endian));
 }
 
+void	ft_set_data(t_mlx *data)
+{
+	if (!data->coord.zoom)
+		data->coord.zoom = 0.5;
+	if (!data->coord.move_x)
+		data->coord.move_x = 0;
+	if (!data->coord.move_y)
+		data->coord.move_y = 0;
+	if (!data->coord.iter)
+		data->coord.iter = 100;
+}
+
 int		main(int ac, char **av)
 {
 	int				fractol;
@@ -54,9 +66,9 @@ int		main(int ac, char **av)
 	fractol = ft_find_fract(av[1]);
 	if (!fractol)
 		ft_print_fract();
-	if (fractol == 1)
-		ft_men_fract(data);
-	if (fractol == 2)
-		ft_jul_fract(data);
+	data.fractol = fractol;
+	ft_set_data(&data);
+	mlx_hook(data.wnd, 2, 5, ft_catch_key, &data);
+	mlx_hook(data.wnd, 4, 0, mouse_zoom, &data);
 	mlx_loop(data.mlx);
 }

@@ -14,38 +14,18 @@
 
 int		ft_make_col(int i)
 {
-	return(0x0000FF + i);
+	return(0x000000 + i * i);
 }
 
-void	ft_check_key(t_mult *coord, int keycode)
+void	ft_check_key(t_mult *coord, t_mult keys)
 {
-	if (!coord->zoom)
-		coord->zoom = 0.5;
-	if (!coord->move_x)
-		coord->move_x = -1.3;
-	if (!coord->move_y)
-		coord->move_y = 0.1;
-	if (!coord->iter)
-		coord->iter = 300;
-	if (keycode == 116)
-		coord->iter += 5;
-	if (keycode == 121 && coord->iter > 80)
-		coord->iter -= 5;
-	if (keycode == 24)
-		coord->zoom *= 1.1;
-	if (keycode == 27)
-		coord->zoom /= 1.1;
-	if (keycode == 13)
-		coord->move_y -= 0.1 / coord->zoom;
-	if (keycode == 1)
-		coord->move_y += 0.1 / coord->zoom;
-	if (keycode == 0)
-		coord->move_x -= 0.1 / coord->zoom;
-	if (keycode == 2)
-		coord->move_x += 0.1 / coord->zoom;
+	coord->zoom = keys.zoom;
+	coord->move_x = keys.move_x;
+	coord->move_y = keys.move_y;
+	coord->iter = keys.iter;
 }
 
-void	ft_make_coord(t_mult *coord,int keycode, int *mas)
+void	ft_make_coord(t_mult *coord, int *mas, t_mult keys)
 {
 	static int	i;
 	static int	y0;
@@ -72,7 +52,7 @@ void	ft_make_coord(t_mult *coord,int keycode, int *mas)
 	coord->y1 = y1;
 	coord->x0 = x0;
 	coord->x1 = x1;
-	ft_check_key(coord, keycode);
+	ft_check_key(coord, keys);
 	coord->img_mas = mas;
 	i++;
 	if (i == 10)
@@ -112,8 +92,8 @@ void	*ft_men(void *param)
 	{
 		while (x < data->x1)
 		{
-			c_x = (x - 500) / (0.5 * zoom * 1000) + move_x;
-			c_y = (y - 500) / (0.5 * zoom * 1000) + move_y;
+			c_x = (x - 0.5 * 1000) / (0.5 * zoom * 1000) + move_x;
+			c_y = (y - 0.5 * 1000) / (0.5 * zoom * 1000) + move_y;
 			new_x = 0;
 			new_y = 0;
 			old_x = 0;
@@ -140,58 +120,20 @@ void	*ft_men(void *param)
 	pthread_exit(0);
 }
 
-int			ft_make_line(int keycode, void *structure)
+void	ft_men_fract(t_mlx *data)
 {
-	t_mlx			*data;
 	pthread_t		tid[10]; 
 	int				i;
 	static t_mult	coord[10];	
 
-	data = structure;
 	i = -1;
 	while (++i < 10)
-		ft_make_coord(&coord[i], keycode, data->img.img_mas);
-	pthread_create(&tid[0], NULL, ft_men, &coord[0]);
-	pthread_create(&tid[1], NULL, ft_men, &coord[1]);
-	pthread_create(&tid[2], NULL, ft_men, &coord[2]);
-	pthread_create(&tid[3], NULL, ft_men, &coord[3]);
-	pthread_create(&tid[4], NULL, ft_men, &coord[4]);
-	pthread_create(&tid[5], NULL, ft_men, &coord[5]);
-	pthread_create(&tid[6], NULL, ft_men, &coord[6]);
-	pthread_create(&tid[7], NULL, ft_men, &coord[7]);
-	pthread_create(&tid[8], NULL, ft_men, &coord[8]);
-	pthread_create(&tid[9], NULL, ft_men, &coord[9]);
-	pthread_join(tid[0], NULL);
-	pthread_join(tid[1], NULL);
-	pthread_join(tid[2], NULL);
-	pthread_join(tid[3], NULL);
-	pthread_join(tid[4], NULL);
-	pthread_join(tid[5], NULL);
-	pthread_join(tid[6], NULL);
-	pthread_join(tid[7], NULL);
-	pthread_join(tid[8], NULL);
-	pthread_join(tid[9], NULL);
-	// ft_printf("%i\n", coord[9].iter);
+		ft_make_coord(&coord[i], data->img.img_mas, data->coord);
+	i = -1;
+	while (++i < 10)
+		pthread_create(&tid[i], NULL, ft_men, &coord[i]);
+	i = -1;
+	while (++i < 10)
+		pthread_join(tid[i], NULL);;
 	mlx_put_image_to_window (data->mlx, data->wnd, data->img.img_ptr, 0, 0);
-	return (0);
-}
-
-void	ft_men_fract(t_mlx data)
-{
-	// pthread_t		tid[4]; 
-	// int				i;
-	// static t_mul	coord[4];
-	// i = -1;
-
-	// while (++i < 4)
-	// 	ft_make_coord(coord[i]);
-	// pthread_create(&tid[0], NULL, ft_men, &coord[0]);
-	// pthread_create(&tid[1], NULL, ft_men, &coord[1]);
-	// pthread_create(&tid[2], NULL, ft_men, &coord[2]);
-	// pthread_create(&tid[3], NULL, ft_men, &coord[3]);
-	mlx_hook(data.wnd, 2, 5, ft_make_line, &data);
-		
-		// ft_men(&data);
-	// mlx_put_image_to_window (data->mlx, data->wnd, data->img.img_ptr, 0, 0);
-	// pthread_join(tid, NULL);
 }

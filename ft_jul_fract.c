@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void	ft_jul_fract(t_mlx data)
+void	ft_jul_fract(t_mlx *data)
 {
 	(void)data;
 }
