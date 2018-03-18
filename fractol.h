@@ -17,6 +17,7 @@
 #define HIGHT	1000
 
 # include <math.h>
+# include <OpenCL/opencl.h>
 # include <pthread.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -49,6 +50,10 @@ typedef	struct 		s_mult
 	double			move_x;
 	double			move_y;
 	int				iter;
+	int				ch_zoom_x;
+	int				ch_zoom_y;
+	int				cent_x;
+	int				cent_y;
 }					t_mult;
 
 typedef struct		s_mlx
