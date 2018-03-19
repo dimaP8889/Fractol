@@ -43,14 +43,10 @@ void	ft_init_image(t_mlx *data)
 
 void	ft_set_data(t_mlx *data)
 {
-	if (!data->coord.zoom)
-		data->coord.zoom = 0.5;
-	if (!data->coord.move_x)
-		data->coord.move_x = 0;
-	if (!data->coord.move_y)
-		data->coord.move_y = 0;
-	if (!data->coord.iter)
-		data->coord.iter = 100;
+	data->coord.zoom = 0.5;
+	data->coord.move_x = -0.5;
+	data->coord.move_y = 0;
+	data->coord.iter = 100;
 	data->coord.ch_zoom_x = 0;
 	data->coord.ch_zoom_y = 0;
 	data->coord.cent_x = 500;

@@ -54,6 +54,7 @@ typedef	struct 		s_mult
 	int				ch_zoom_y;
 	int				cent_x;
 	int				cent_y;
+	int				null;
 }					t_mult;
 
 typedef struct		s_mlx
@@ -69,5 +70,6 @@ int		ft_catch_key(int keycode, void *param);
 void	ft_jul_fract(t_mlx *data);
 void	ft_men_fract(t_mlx *data);
 int		mouse_zoom(int button, int x, int y, void *param);
+void	ft_set_data(t_mlx *data);
 
 #endif

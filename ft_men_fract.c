@@ -12,9 +12,31 @@
 
 #include "fractol.h"
 
+int		ft_change_g(int i)
+{
+	static int		col;
+
+	col = i >> 8;
+	col &= 255;
+	col++;
+	return (col);
+}
+
+int		ft_change_r(int i)
+{
+	static int		col;
+
+	col = i >> 16;
+	col++;
+	return (col);
+}
+
 int		ft_make_col(int i)
 {
-	return(0x000000 + i * i);
+	i = ft_change_r(i * i);
+	i = ft_change_g(i * i);
+	i = ft_change_b(i * i);
+	return(i);
 }
 
 void	ft_check_key(t_mult *coord, t_mult keys)
@@ -35,20 +57,20 @@ void	ft_make_coord(t_mult *coord, int *mas, t_mult keys)
 	static int	x0;
 	static int	x1;
 
-	if ((i % 10) == 0)
+	if ((i % 8) == 0)
 	{
 		x0 = 0;
-		x1 = 100;
+		x1 = 125;
 		if (!i)
 			y0 = 0;
 		else
-			y0 += 100;
+			y0 += 125;
 		y1 += 1000;
 	}
 	else
 	{
-		x0 += 100;
-		x1 += 100;
+		x0 += 125;
+		x1 += 125;
 	}
 	coord->y0 = y0;
 	coord->y1 = y1;
@@ -57,7 +79,7 @@ void	ft_make_coord(t_mult *coord, int *mas, t_mult keys)
 	ft_check_key(coord, keys);
 	coord->img_mas = mas;
 	i++;
-	if (i == 10)
+	if (i == 8)
 	{
 		i = 0;
 		y0 = 0;
@@ -124,18 +146,18 @@ void	*ft_men(void *param)
 
 void	ft_men_fract(t_mlx *data)
 {
-	pthread_t		tid[10]; 
+	pthread_t		tid[8]; 
 	int				i;
-	static t_mult	coord[10];	
+	static t_mult	coord[8];	
 
 	i = -1;
-	while (++i < 10)
+	while (++i < 8)
 		ft_make_coord(&coord[i], data->img.img_mas, data->coord);
 	i = -1;
-	while (++i < 10)
+	while (++i < 8)
 		pthread_create(&tid[i], NULL, ft_men, &coord[i]);
 	i = -1;
-	while (++i < 10)
+	while (++i < 8)
 		pthread_join(tid[i], NULL);
 	mlx_put_image_to_window (data->mlx, data->wnd, data->img.img_ptr, 0, 0);
 }

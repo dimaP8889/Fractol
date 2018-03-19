@@ -14,13 +14,13 @@
 
 void	ft_change_zoom_pos(t_mlx *data, int x, int y)
 {
-	(void)data;
 	static int	x_cent;
 	static int	y_cent;
-	if (!x_cent && !y_cent)
+	if ((!x_cent && !y_cent) || data->coord.null)
 	{
 		x_cent = 500;
 		y_cent = 500;
+		data->coord.null = 0;
 	}
 	if (x_cent != x)
 	{
@@ -53,15 +53,16 @@ void	ft_keycode_mouse(int keycode, t_mlx *data, int x, int y)
 	static	int	x1;
 	static	int	y1;
 
-	if (!x1 && !y1)
+	if ((!x1 && !y1) || data->coord.null)
 	{
 		x1 = 500;
 		y1 = 500;
 	}
-	if (keycode == 2)
-	{
 		x1 = x;
 		y1 = y;
+	if (keycode == 1)
+	{
+		ft_find_move(data, x, y);
 	}
 	if (keycode == 5)
 	{
