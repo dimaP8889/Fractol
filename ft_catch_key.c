@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_catch_key.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 19:15:24 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/14 19:15:25 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/19 14:28:01 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ft_keycode(int keycode, t_mlx *data)
 		data->coord.move_y = 0;
 		data->coord.ch_zoom_x = 0;
 		data->coord.ch_zoom_y = 0;
+		data->coord.cent_x = 500;
+		data->coord.cent_y = 500;
 	}
 	if (keycode == 53)
 		exit(1);

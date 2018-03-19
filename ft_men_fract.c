@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_men_fract.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 18:39:50 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/12 18:39:51 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/19 14:29:30 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ void	ft_check_key(t_mult *coord, t_mult keys)
 	coord->iter = keys.iter;
 	coord->ch_zoom_y = keys.ch_zoom_y;
 	coord->ch_zoom_x = keys.ch_zoom_x;
-	printf("zoom_x: %i\n", coord->ch_zoom_x);
-	printf("zoom_y: %i\n", coord->ch_zoom_y);
-	printf("move_x: %f\n", coord->move_x);
-	printf("move_y: %f\n", coord->move_y);
-	printf("\n");
 }
 
 void	ft_make_coord(t_mult *coord, int *mas, t_mult keys)
@@ -78,9 +73,9 @@ void	*ft_men(void *param)
 	double	new_y;
 	double	old_x;
 	double	old_y;
-	static double	zoom;
-	static double	move_x;
-	static double	move_y;
+	double	zoom;
+	double	move_x;
+	double	move_y;
 	int		color;
 	int		x;
 	int		y;
@@ -99,8 +94,8 @@ void	*ft_men(void *param)
 	{
 		while (x < data->x1)
 		{
-			c_x = (x - 0.5 * 1000 + data->ch_zoom_x) / (0.5 * zoom * 1000) + move_x;
-			c_y = (y - 0.5 * 1000 + data->ch_zoom_y) / (0.5 * zoom * 1000) + move_y;
+			c_x = (x - 500 + data->ch_zoom_x) / (0.5 * zoom * 1000) + move_x;
+			c_y = (y - 500 + data->ch_zoom_y) / (0.5 * zoom * 1000) + move_y;
 			new_x = 0;
 			new_y = 0;
 			old_x = 0;

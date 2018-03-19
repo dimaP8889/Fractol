@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_zoom.c                                       :+:      :+:    :+:   */
+/*   ft_mouse_zoom.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 14:17:46 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/15 14:17:48 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/19 15:14:12 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,16 @@ void	ft_change_zoom_pos(t_mlx *data, int x, int y)
 		x_cent = 500;
 		y_cent = 500;
 	}
-	printf("x cent: %i\n", x_cent);
-	printf("x: %i\n", x);
-	printf("y cent: %i\n", y_cent);
-	printf("y: %i\n", y);
-	if (x > x_cent)
+	if (x_cent != x)
 	{
 		data->coord.ch_zoom_x += (x_cent - x);
-		data->coord.move_x += (x - x_cent) / (x_cent * data->coord.zoom);
+		data->coord.move_x += ((x - x_cent)) / (500 * data->coord.zoom);
 	}
-	else if (x < x_cent)
-	{
-		data->coord.ch_zoom_x += (x_cent - x);
-		data->coord.move_x += (x - x_cent) / (x_cent * data->coord.zoom);
-	}
-	if (y > y_cent)
+	if (y_cent != y)
 	{
 		data->coord.ch_zoom_y += (y_cent - y);
-		data->coord.move_y += (y - y_cent) / (y_cent * data->coord.zoom);
+		data->coord.move_y += ((y - y_cent)) / (500 * data->coord.zoom);
 	}
-	else if (y < y_cent)
-	{
-		data->coord.ch_zoom_y += (y_cent - y);
-		data->coord.move_y += (y - y_cent) / (y_cent * data->coord.zoom);
-	}
-	printf("zoom_x: %i\n", data->coord.ch_zoom_x);
-	printf("zoom_y: %i\n", data->coord.ch_zoom_y);
-	printf("move_x: %f\n", data->coord.move_x);
-	printf("move_y: %f\n", data->coord.move_y);
 	y_cent = y;
 	x_cent = x;
 }
@@ -83,22 +65,20 @@ void	ft_keycode_mouse(int keycode, t_mlx *data, int x, int y)
 	}
 	if (keycode == 5)
 	{
-		data->coord.zoom *= 1.1;
 		ft_change_zoom_pos(data, x1, y1);
+		data->coord.zoom *= 1.1;
 	}
 	if (keycode == 4)
 	{
-		data->coord.zoom /= 1.1;
 		ft_change_zoom_pos(data, x1, y1);
+		data->coord.zoom /= 1.1;
 	}
 }
 
 int		mouse_zoom(int button, int x, int y, void *param)
 {
 	static t_mlx		*data;
-
-	(void)x;
-	(void)y;
+	
 	data = param;
 	ft_keycode_mouse(button, data, x, y);
 	if (data->fractol == 1)
