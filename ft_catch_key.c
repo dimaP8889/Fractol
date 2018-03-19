@@ -19,6 +19,29 @@ void	ft_keycode(int keycode, t_mlx *data)
 		ft_set_data(data);
 		data->coord.null = 1;
 	}
+	if (keycode == 17)
+		data->coord.r = 1;
+	else
+		data->coord.r = 0;
+	if (keycode == 5)
+		data->coord.g = 1;
+	else
+		data->coord.g = 0;
+	if (keycode == 11)
+		data->coord.b = 1;
+	else
+		data->coord.b = 0;
+	if (keycode == 45)
+	{
+		if (!data->coord.narko)
+			data->coord.narko = 1;
+		else
+			data->coord.narko = 0;
+	}
+	if (keycode == 30 && data->coord.degree > 1)
+		data->coord.degree--;
+	if (keycode == 33 && data->coord.degree < 10)
+		data->coord.degree++;
 	if (keycode == 53)
 		exit(1);
 	if (keycode == 24)
@@ -40,6 +63,8 @@ int		ft_catch_key(int keycode, void *param)
 	static t_mlx		*data;
 
 	data = param;
+	if (!data->coord.narko)
+		mlx_clear_window(data->mlx, data->wnd);
 	ft_keycode(keycode, data);
 	if (data->fractol == 1)
 		ft_men_fract(data);

@@ -55,6 +55,11 @@ typedef	struct 		s_mult
 	int				cent_x;
 	int				cent_y;
 	int				null;
+	int				r;
+	int				g;
+	int				b;
+	int				narko;
+	int				degree;
 }					t_mult;
 
 typedef struct		s_mlx

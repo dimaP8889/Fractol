@@ -12,31 +12,77 @@
 
 #include "fractol.h"
 
-int		ft_change_g(int i)
+int		ft_change_b(int i, t_mult *data)
 {
 	static int		col;
 
+	(void)data;
+	col = i;
+	col &= 255;
+	return (col);
+}
+
+int		ft_find_degree(int i, t_mult *data)
+{
+	int		coun;
+
+	coun = data->degree;
+
+	while (coun > 0)
+	{
+		i *= i;
+		coun--;
+	}
+	return (i);
+}
+
+int		ft_change_g(int i, t_mult *data)
+{
+	static int		col;
+
+	(void)data;
+	col = i;
 	col = i >> 8;
 	col &= 255;
-	col++;
 	return (col);
 }
 
-int		ft_change_r(int i)
+int		ft_change_r(int i, t_mult *data)
 {
 	static int		col;
 
+	(void)data;
+	col = i;
 	col = i >> 16;
-	col++;
 	return (col);
 }
 
-int		ft_make_col(int i)
+int		ft_make_col(int i, t_mult *data)
 {
-	i = ft_change_r(i * i);
-	i = ft_change_g(i * i);
-	i = ft_change_b(i * i);
-	return(i);
+	int		col;
+	int		r;
+	int		g;
+	int		b;
+
+	if (data->narko)
+	{
+		col = 0;
+		r = ft_change_r(ft_find_degree(0xFF0000 - i, data), data);
+		g = ft_change_g(ft_find_degree(0xFF0000 - i, data), data);
+		b = ft_change_b(ft_find_degree(0xFF0000 - i, data), data);
+	}
+	else
+	{
+		col = ft_find_degree(i, data);
+		return (col);
+		// r = ft_change_r(ft_find_degree(i, data), data);
+		// g = ft_change_g(ft_find_degree(i, data), data);
+		// b = ft_change_b(ft_find_degree(i, data), data);
+	}
+	g <<= 8;
+	r <<= 16;
+	col = r | g | b;
+	return(col);
 }
 
 void	ft_check_key(t_mult *coord, t_mult keys)
@@ -47,6 +93,11 @@ void	ft_check_key(t_mult *coord, t_mult keys)
 	coord->iter = keys.iter;
 	coord->ch_zoom_y = keys.ch_zoom_y;
 	coord->ch_zoom_x = keys.ch_zoom_x;
+	coord->r = keys.r;
+	coord->g = keys.g;
+	coord->b = keys.b;
+	coord->narko = keys.narko;
+	coord->degree = keys.degree;
 }
 
 void	ft_make_coord(t_mult *coord, int *mas, t_mult keys)
@@ -134,7 +185,7 @@ void	*ft_men(void *param)
 					break ;
 				i++;
 			}
-			color = (i < iter ? ft_make_col(i) : 0x000000);
+			color = (i < iter ? ft_make_col(i, data) : 0x000000);
 			data->img_mas[y * WIDTH + x] = color;
 			x++;
 		}

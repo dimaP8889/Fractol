@@ -51,6 +51,11 @@ void	ft_set_data(t_mlx *data)
 	data->coord.ch_zoom_y = 0;
 	data->coord.cent_x = 500;
 	data->coord.cent_y = 500;
+	data->coord.r = 0;
+	data->coord.g = 0;
+	data->coord.b = 0;
+	data->coord.narko = 0;
+	data->coord.degree = 1;
 }
 
 int		main(int ac, char **av)
