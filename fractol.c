@@ -41,7 +41,7 @@ void	ft_init_image(t_mlx *data)
 	&(endian));
 }
 
-void	ft_set_data(t_mlx *data)
+void	ft_set_data(t_mlx *data, int fractol)
 {
 	data->coord.zoom = 0.5;
 	data->coord.move_x = -0.5;
@@ -51,11 +51,26 @@ void	ft_set_data(t_mlx *data)
 	data->coord.ch_zoom_y = 0;
 	data->coord.cent_x = 500;
 	data->coord.cent_y = 500;
-	data->coord.r = 0;
-	data->coord.g = 0;
-	data->coord.b = 0;
 	data->coord.narko = 0;
 	data->coord.degree = 1;
+	data->coord.const_x = -0.7;
+	data->coord.const_y = 0.25;
+	data->coord.col = 0xFFFFFF;
+	data->fractol = fractol;
+}
+
+void	ft_first_pic(t_mlx data, int fractol)
+{
+	char			*str;
+
+	mlx_clear_window(data.mlx, data.wnd);
+	if (fractol == 1)
+		ft_men_fract(&data);
+	if (fractol == 2)
+		ft_jul_fract(&data);
+	str = ft_itoa_base(data.coord.col, 16, 1);
+	mlx_string_put(data.mlx, data.wnd, 0, 0, data.coord.col, str);
+	free(str);
 }
 
 int		main(int ac, char **av)
@@ -71,8 +86,8 @@ int		main(int ac, char **av)
 	fractol = ft_find_fract(av[1]);
 	if (!fractol)
 		ft_print_fract();
-	data.fractol = fractol;
-	ft_set_data(&data);
+	ft_set_data(&data, fractol);
+	ft_first_pic(data, fractol);
 	mlx_hook(data.wnd, 2, 5, ft_catch_key, &data);
 	mlx_hook(data.wnd, 4, 0, mouse_zoom, &data);
 	mlx_loop(data.mlx);

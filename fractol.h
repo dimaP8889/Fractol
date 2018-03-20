@@ -55,12 +55,25 @@ typedef	struct 		s_mult
 	int				cent_x;
 	int				cent_y;
 	int				null;
-	int				r;
-	int				g;
-	int				b;
 	int				narko;
 	int				degree;
+	int				col;
+	double			const_x;
+	double			const_y;
 }					t_mult;
+
+typedef struct	s_grad
+{
+	int			r_start;
+	int			g_start;
+	int			b_start;
+	int			r_to;
+	int			g_to;
+	int			b_to;
+	double		r_delta;
+	double		g_delta;
+	double		b_delta;
+}				t_grad;
 
 typedef struct		s_mlx
 {
@@ -75,6 +88,10 @@ int		ft_catch_key(int keycode, void *param);
 void	ft_jul_fract(t_mlx *data);
 void	ft_men_fract(t_mlx *data);
 int		mouse_zoom(int button, int x, int y, void *param);
-void	ft_set_data(t_mlx *data);
+void	ft_set_data(t_mlx *data, int fractol);
+int		ft_make_col(int i, t_mult *data, int check);
+int		ft_grad(int start_col, t_mult *data, int check, int i);
+void	ft_make_coord(t_mult *coord, int *mas, t_mult keys);
+void	ft_check_key(t_mult *coord, t_mult keys);
 
 #endif

@@ -12,79 +12,6 @@
 
 #include "fractol.h"
 
-int		ft_change_b(int i, t_mult *data)
-{
-	static int		col;
-
-	(void)data;
-	col = i;
-	col &= 255;
-	return (col);
-}
-
-int		ft_find_degree(int i, t_mult *data)
-{
-	int		coun;
-
-	coun = data->degree;
-
-	while (coun > 0)
-	{
-		i *= i;
-		coun--;
-	}
-	return (i);
-}
-
-int		ft_change_g(int i, t_mult *data)
-{
-	static int		col;
-
-	(void)data;
-	col = i;
-	col = i >> 8;
-	col &= 255;
-	return (col);
-}
-
-int		ft_change_r(int i, t_mult *data)
-{
-	static int		col;
-
-	(void)data;
-	col = i;
-	col = i >> 16;
-	return (col);
-}
-
-int		ft_make_col(int i, t_mult *data)
-{
-	int		col;
-	int		r;
-	int		g;
-	int		b;
-
-	if (data->narko)
-	{
-		col = 0;
-		r = ft_change_r(ft_find_degree(0xFF0000 - i, data), data);
-		g = ft_change_g(ft_find_degree(0xFF0000 - i, data), data);
-		b = ft_change_b(ft_find_degree(0xFF0000 - i, data), data);
-	}
-	else
-	{
-		col = ft_find_degree(i, data);
-		return (col);
-		// r = ft_change_r(ft_find_degree(i, data), data);
-		// g = ft_change_g(ft_find_degree(i, data), data);
-		// b = ft_change_b(ft_find_degree(i, data), data);
-	}
-	g <<= 8;
-	r <<= 16;
-	col = r | g | b;
-	return(col);
-}
-
 void	ft_check_key(t_mult *coord, t_mult keys)
 {
 	coord->zoom = keys.zoom;
@@ -93,11 +20,11 @@ void	ft_check_key(t_mult *coord, t_mult keys)
 	coord->iter = keys.iter;
 	coord->ch_zoom_y = keys.ch_zoom_y;
 	coord->ch_zoom_x = keys.ch_zoom_x;
-	coord->r = keys.r;
-	coord->g = keys.g;
-	coord->b = keys.b;
 	coord->narko = keys.narko;
 	coord->degree = keys.degree;
+	coord->col = keys.col;
+	coord->const_x = keys.const_x;
+	coord->const_y = keys.const_y;
 }
 
 void	ft_make_coord(t_mult *coord, int *mas, t_mult keys)
@@ -154,9 +81,11 @@ void	*ft_men(void *param)
 	int		y;
 	int		iter;
 	int		i;
+	int		check;
 	t_mult	*data;
 
 	data = param;
+	check = 0;
 	iter = data->iter;
 	x = data->x0;
 	y = data->y0;
@@ -185,7 +114,8 @@ void	*ft_men(void *param)
 					break ;
 				i++;
 			}
-			color = (i < iter ? ft_make_col(i, data) : 0x000000);
+			color = (i < iter ? ft_make_col(i, data, check) : 0x000000);
+			check = 1;
 			data->img_mas[y * WIDTH + x] = color;
 			x++;
 		}

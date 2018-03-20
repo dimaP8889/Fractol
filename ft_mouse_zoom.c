@@ -58,12 +58,15 @@ void	ft_keycode_mouse(int keycode, t_mlx *data, int x, int y)
 		x1 = 500;
 		y1 = 500;
 	}
-		x1 = x;
-		y1 = y;
+	x1 = x;
+	y1 = y;
+	// if (data->fractol == 2)
+	// {
+	// 	data->coord.const_x += (500 - x) / 200;
+	// 	data->coord.const_y += (500 - y) / 200;
+	// }
 	if (keycode == 1)
-	{
 		ft_find_move(data, x, y);
-	}
 	if (keycode == 5)
 	{
 		ft_change_zoom_pos(data, x1, y1);
@@ -79,6 +82,7 @@ void	ft_keycode_mouse(int keycode, t_mlx *data, int x, int y)
 int		mouse_zoom(int button, int x, int y, void *param)
 {
 	static t_mlx		*data;
+	char				*str;
 	
 	data = param;
 	if (!data->coord.narko)
@@ -88,5 +92,11 @@ int		mouse_zoom(int button, int x, int y, void *param)
 		ft_men_fract(data);
 	if (data->fractol == 2)
 		ft_jul_fract(data);
+	if (!data->coord.narko)
+	{
+		str = ft_itoa_base(data->coord.col, 16, 1);
+		mlx_string_put(data->mlx, data->wnd, 0, 0, data->coord.col, str);
+		free(str);
+	}
 	return (0);
 }
