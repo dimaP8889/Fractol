@@ -21,7 +21,7 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "minilibx/mlx.h"
+# include "mlx.h"
 # include "libft/includes/libft.h"
 # include "libft/includes/get_next_line.h"
 # include "libft/ft_printf/ft_printf.h"

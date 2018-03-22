@@ -16,13 +16,26 @@ SRC = fractol.c ft_jul_fract.c ft_men_fract.c ft_catch_key.c ft_mouse_zoom.c \
 ft_make_col.c ft_make_grad.c ft_mouse_motion.c ft_zoooooom.c ft_keycode_extra.c\
 ft_print.c ft_sets_men.c ft_sets_jul.c ft_extra_f.c ft_make_coord.c
 HEADER = fractol.h
-FLAGS = -Wall -Wextra -Werror
-FLAGS_MLX = -lmlx
-MLX = minilibx/
+FL = -Wall -Wextra -Werror
+F_M = -lmlx
+MLX = /usr/local/lib/
 CC = gcc
 FLAG_FRAME = -framework
-FRAMEWORK = $(FLAG_FRAME) OpenGL $(FLAG_FRAME) AppKit
-MULT = -lpthread
+FW = $(FLAG_FRAME) OpenGL $(FLAG_FRAME) AppKit
+M_H = /usr/local/include
+ML = -lpthread
 
-comp:
-	$(CC) $(FLAGS) -o $(NAME) $(MULT) $(SRC) $(LIBA) -L $(MLX) $(FLAGS_MLX) $(FRAMEWORK)
+all: $(NAME)
+
+$(NAME):
+	@$(MAKE) -C libft
+	@$(CC) $(FL) -I $(M_H) -o $(NAME) $(ML) $(SRC) $(LIBA) -L $(MLX) $(F_M) $(FW)
+
+clean:
+	@$(MAKE) -C libft clean
+
+fclean: clean
+	@rm -rf $(NAME)
+	@$(MAKE) -C libft fclean
+
+re: fclean all
