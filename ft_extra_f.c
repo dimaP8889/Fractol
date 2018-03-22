@@ -57,7 +57,8 @@ void		ft_find_fract(t_mlx *data)
 {
 	if (data->fractol == 1 || data->fractol == 3 || data->fractol == 4)
 		ft_men_fract(data);
-	if (data->fractol == 2 || data->fractol == 5)
+	if (data->fractol == 2 || data->fractol == 5 || data->fractol == 6
+	|| data->fractol == 7)
 		ft_jul_fract(data);
 }
 
@@ -96,5 +97,9 @@ int			ft_choose(int i, t_mult *data, double c_x, double c_y)
 		i = ft_tricorn_l(i, data, c_x, c_y);
 	if (data->fractol == 5)
 		i = ft_jul_tan_l(i, data, c_x, c_y);
+	if (data->fractol == 6)
+		i = ft_jul_third_l(i, data, c_x, c_y);
+	if (data->fractol == 7)
+		i = ft_jul_some_l(i, data, c_x, c_y);
 	return (i);
 }

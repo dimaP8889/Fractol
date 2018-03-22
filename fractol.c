@@ -21,6 +21,8 @@ static void	ft_print_fract(void)
 	ft_printf("ship\n");
 	ft_printf("tricorn\n");
 	ft_printf("jul_tan\n");
+	ft_printf("jul_third\n");
+	ft_printf("jul_some\n");
 	exit(1);
 }
 
@@ -36,6 +38,10 @@ static int	ft_find_type(char *fract)
 		return (4);
 	if (!ft_strcmp(fract, "jul_tan"))
 		return (5);
+	if (!ft_strcmp(fract, "jul_third"))
+		return (6);
+	if (!ft_strcmp(fract, "jul_some"))
+		return (7);
 	return (0);
 }
 

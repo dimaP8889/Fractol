@@ -32,7 +32,7 @@ static void	ft_keycode_sec(int keycode, t_mlx *data)
 	}
 	if (keycode == 49)
 	{
-		if (data->fractol == 5)
+		if (data->fractol == 7)
 			data->fractol = 1;
 		else
 			data->fractol++;

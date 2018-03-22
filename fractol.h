@@ -130,5 +130,7 @@ int				ft_jul_l(int i, t_mult *data, double new_x, double new_y);
 void			ft_colours(int keycode, t_mlx *data);
 void			ft_keycode(int keycode, t_mlx *data);
 int				ft_exit_x(void *par);
+int				ft_jul_third_l(int i, t_mult *data, double new_x, double new_y);
+int				ft_jul_some_l(int i, t_mult *data, double new_x, double new_y);
 
 #endif

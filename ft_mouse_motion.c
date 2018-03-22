@@ -33,7 +33,8 @@ int			mouse_motion(int x, int y, void *param)
 	data->coord.catch_y = y;
 	if (!data->coord.narko)
 		mlx_clear_window(data->mlx, data->wnd);
-	if (data->coord.move && (data->fractol == 2 || data->fractol == 5))
+	if (data->coord.move && (data->fractol == 2 || data->fractol == 5
+	|| data->fractol == 6 || data->fractol == 7))
 		ft_mouse(data, x, y);
 	ft_find_fract(data);
 	if (!data->coord.narko)
