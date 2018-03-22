@@ -58,8 +58,15 @@ typedef	struct 		s_mult
 	int				narko;
 	int				degree;
 	int				col;
+	int				background;
 	double			const_x;
 	double			const_y;
+	int				move;
+	int				zoooooom;
+	int				catch_x;
+	int				catch_y;
+	int				beaut;
+	int				help;
 }					t_mult;
 
 typedef struct	s_grad
@@ -88,10 +95,16 @@ int		ft_catch_key(int keycode, void *param);
 void	ft_jul_fract(t_mlx *data);
 void	ft_men_fract(t_mlx *data);
 int		mouse_zoom(int button, int x, int y, void *param);
+int		mouse_motion(int x, int y, void *param);
 void	ft_set_data(t_mlx *data, int fractol);
 int		ft_make_col(int i, t_mult *data, int check);
 int		ft_grad(int start_col, t_mult *data, int check, int i);
 void	ft_make_coord(t_mult *coord, int *mas, t_mult keys);
 void	ft_check_key(t_mult *coord, t_mult keys);
+int		zoooooom(void *param);
+void	ft_change_zoom_pos(t_mlx *data, int x, int y);
+void	ft_burn_ship(t_mlx *data);
+void	ft_print(t_mlx	*data);
+void	ft_instruct(t_mlx	*data);
 
 #endif

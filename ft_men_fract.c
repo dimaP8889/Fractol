@@ -25,6 +25,13 @@ void	ft_check_key(t_mult *coord, t_mult keys)
 	coord->col = keys.col;
 	coord->const_x = keys.const_x;
 	coord->const_y = keys.const_y;
+	coord->move = keys.move;
+	coord->zoooooom = keys.zoooooom;
+	coord->catch_x = keys.catch_x;
+	coord->catch_y = keys.catch_y;
+	coord->background = keys.background;
+	coord->beaut = keys.beaut;
+	coord->help = keys.help;
 }
 
 void	ft_make_coord(t_mult *coord, int *mas, t_mult keys)
@@ -114,8 +121,9 @@ void	*ft_men(void *param)
 					break ;
 				i++;
 			}
-			color = (i < iter ? ft_make_col(i, data, check) : 0x000000);
-			check = 1;
+			color = (i < iter ? ft_make_col(i, data, check) : data->background);
+			if (i != iter)
+				check = 1;
 			data->img_mas[y * WIDTH + x] = color;
 			x++;
 		}

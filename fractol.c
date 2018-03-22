@@ -18,6 +18,7 @@ void	ft_print_fract(void)
 {
 	ft_printf("men\n");
 	ft_printf("jul\n");
+	ft_printf("ship\n");
 	exit (1);
 }
 
@@ -27,6 +28,8 @@ int		ft_find_fract(char *fract)
 		return (1);
 	if (!ft_strcmp(fract, "jul"))
 		return (2);
+	if (!ft_strcmp(fract, "ship"))
+		return (3);
 	return (0);
 }
 
@@ -43,9 +46,17 @@ void	ft_init_image(t_mlx *data)
 
 void	ft_set_data(t_mlx *data, int fractol)
 {
+	static int	check;
+
 	data->coord.zoom = 0.5;
-	data->coord.move_x = -0.5;
-	data->coord.move_y = 0;
+	if (fractol == 1 || fractol == 3)
+		data->coord.move_x = -0.5;
+	else
+		data->coord.move_x = 0;
+	if (fractol == 3)
+		data->coord.move_y = -0.5;
+	else
+		data->coord.move_y = 0;
 	data->coord.iter = 100;
 	data->coord.ch_zoom_x = 0;
 	data->coord.ch_zoom_y = 0;
@@ -56,27 +67,35 @@ void	ft_set_data(t_mlx *data, int fractol)
 	data->coord.const_x = -0.7;
 	data->coord.const_y = 0.25;
 	data->coord.col = 0xFFFFFF;
+	data->coord.background = 0x000000;
+	data->coord.move = 1;
+	data->coord.zoooooom = 1;
+	data->coord.catch_y = 500;
+	data->coord.catch_x = 500;
+	data->coord.beaut = 1;
+	if (!check)
+		data->coord.help = 1;
+	check = 1;
 	data->fractol = fractol;
 }
 
-void	ft_first_pic(t_mlx data, int fractol)
+void	ft_first_pic(t_mlx *data, int fractol)
 {
-	char			*str;
-
-	mlx_clear_window(data.mlx, data.wnd);
+	mlx_clear_window(data->mlx, data->wnd);
 	if (fractol == 1)
-		ft_men_fract(&data);
+		ft_men_fract(data);
 	if (fractol == 2)
-		ft_jul_fract(&data);
-	str = ft_itoa_base(data.coord.col, 16, 1);
-	mlx_string_put(data.mlx, data.wnd, 0, 0, data.coord.col, str);
-	free(str);
+		ft_jul_fract(data);
+	if (fractol == 3)
+		ft_burn_ship(data);
+	ft_print(data);
 }
 
 int		main(int ac, char **av)
 {
 	int				fractol;
 	static t_mlx	data;
+	static int		check;
 
 	data.mlx = mlx_init();
 	data.wnd = mlx_new_window(data.mlx, 1000, 1000, "mlx 42");
@@ -86,9 +105,12 @@ int		main(int ac, char **av)
 	fractol = ft_find_fract(av[1]);
 	if (!fractol)
 		ft_print_fract();
-	ft_set_data(&data, fractol);
-	ft_first_pic(data, fractol);
+	if (!check++)
+		ft_set_data(&data, fractol);
+	ft_first_pic(&data, fractol);
 	mlx_hook(data.wnd, 2, 5, ft_catch_key, &data);
 	mlx_hook(data.wnd, 4, 0, mouse_zoom, &data);
+	mlx_loop_hook(data.mlx, zoooooom, &data);
+	mlx_hook(data.wnd, 6, 0, mouse_motion, &data);
 	mlx_loop(data.mlx);
 }

@@ -40,23 +40,67 @@ void	ft_colours(int keycode, t_mlx *data)
 		data->coord.col -= 0x050000;
 	if (keycode == 5 && data->coord.col > 0x000500)
 		data->coord.col -= 0x000500;
-	if (keycode == 4 && data->coord.col > 0x000005)
+	if (keycode == 4 && data->coord.col > 0x000000)
 		data->coord.col -= 0x000005;
+	if (keycode == 32 && data->coord.background < 0xFB0000)
+		data->coord.background += 0x050000;
+	if (keycode == 34 && data->coord.background < 0xFFFB00)
+		data->coord.background += 0x000500;
+	if (keycode == 31 && data->coord.background < 0xFFFFFB)
+		data->coord.background += 0x000005;
+	if (keycode == 38 && data->coord.background > 0x050000)
+		data->coord.background -= 0x050000;
+	if (keycode == 40 && data->coord.background > 0x000500)
+		data->coord.background -= 0x000500;
+	if (keycode == 37 && data->coord.background > 0x000000)
+		data->coord.background -= 0x000005;
 }
 
 void	ft_keycode(int keycode, t_mlx *data)
 {
+	if (keycode == 261)
+	{
+		if (data->coord.help)
+			data->coord.help = 0;
+		else
+			data->coord.help = 1;
+	}
 	if (keycode == 8)
 	{
 		ft_set_data(data, data->fractol);
 		data->coord.null = 1;
 	}
+	if (keycode == 256)
+	{
+		if (data->coord.move)
+			data->coord.move = 0;
+		else
+			data->coord.move = 1;
+	}
+	if (keycode == 6)
+	{
+		if (data->coord.zoooooom)
+			data->coord.zoooooom = 0;
+		else
+			data->coord.zoooooom = 1;
+	}
+	else
+		data->coord.zoooooom = 1;
 	if (keycode == 45)
 	{
 		if (!data->coord.narko)
 			data->coord.narko = 1;
 		else
 			data->coord.narko = 0;
+	}
+	if (keycode == 49)
+	{
+		if (data->fractol == 3)
+			data->fractol = 1;
+		else
+			data->fractol++;
+		ft_set_data(data, data->fractol);
+		data->coord.null = 1;
 	}
 	if (keycode == 30 && data->coord.degree > 1 && data->coord.narko)
 		data->coord.degree--;
@@ -76,6 +120,13 @@ void	ft_keycode(int keycode, t_mlx *data)
 		data->coord.move_x += 0.1 / data->coord.zoom;
 	if (keycode == 2)
 		data->coord.move_x -= 0.1 / data->coord.zoom;
+	if (keycode == 11)
+	{
+		if (data->coord.beaut)
+			data->coord.beaut = 0;
+		else
+			data->coord.beaut = 1;
+	}
 	if (!data->coord.narko)
 		ft_colours(keycode, data);
 }
@@ -83,7 +134,6 @@ void	ft_keycode(int keycode, t_mlx *data)
 int		ft_catch_key(int keycode, void *param)
 {
 	static t_mlx		*data;
-	char				*str;
 
 	data = param;
 	if (!data->coord.narko)
@@ -93,11 +143,11 @@ int		ft_catch_key(int keycode, void *param)
 		ft_men_fract(data);
 	if (data->fractol == 2)
 		ft_jul_fract(data);
+	if (data->fractol == 3)
+		ft_burn_ship(data);
 	if (!data->coord.narko)
 	{
-		str = ft_itoa_base(data->coord.col, 16, 1);
-		mlx_string_put(data->mlx, data->wnd, 0, 0, data->coord.col, str);
-		free(str);
+		ft_print(data);
 	}
 	return (0);
 }

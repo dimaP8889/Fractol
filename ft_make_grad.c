@@ -24,7 +24,10 @@ static int		ft_fin_col(int b_start, int r_start, int g_start)
 
 static t_grad	ft_find_delta(int fin_col, int mov, int start_col)
 {
-	static t_grad grad;
+	static t_grad	grad;
+	double			r_d;
+	double			g_d;
+	double			b_d;
 
 	grad.b_to = (fin_col) & 255;
 	grad.g_to = (fin_col) >> 8;
@@ -34,9 +37,12 @@ static t_grad	ft_find_delta(int fin_col, int mov, int start_col)
 	grad.g_start = start_col >> 8;
 	grad.g_start = grad.g_start & 255;
 	grad.r_start = start_col >> 16;
-	grad.r_delta = (((double)grad.r_to) - ((double)grad.r_start)) / (double)mov;
-	grad.g_delta = (((double)grad.g_to) - ((double)grad.g_start)) / (double)mov;
-	grad.b_delta = (((double)grad.b_to) - ((double)grad.b_start)) / (double)mov;
+	r_d = ((double)grad.r_to - (double)grad.r_start);
+	g_d = ((double)grad.g_to - (double)grad.g_start);
+	b_d = ((double)grad.b_to - (double)grad.b_start);
+	grad.r_delta = r_d / (double)mov;
+	grad.g_delta = g_d / (double)mov;
+	grad.b_delta = b_d / (double)mov;
 	return (grad);
 }
 
@@ -49,8 +55,15 @@ int				ft_grad(int start_col, t_mult *data, int check, int i)
 
 	if (!check)
 		grad = ft_find_delta(data->col, data->iter, start_col);
-	b = i * grad.b_delta;
-	r = i * grad.r_delta;
-	g = i * grad.g_delta;
+	if (!data->beaut)
+	{
+		b = i * fabs(grad.b_delta);
+		r = i * fabs(grad.r_delta);
+		g = i * fabs(grad.g_delta);
+		return (ft_fin_col((int)(b), (int)r, (int)g));
+	}
+	b = grad.b_start + i * grad.b_delta;
+	r = grad.r_start + i * grad.r_delta;
+	g = grad.g_start + i * grad.g_delta;
 	return (ft_fin_col((int)(b), (int)r, (int)g));
 }

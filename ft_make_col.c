@@ -69,7 +69,7 @@ int		ft_make_col(int i, t_mult *data, int check)
 	}
 	else
 	{
-		col = ft_grad(0x000000, data, check, i);
+		col = ft_grad(data->background, data, check, i);
 		return (col);
 	}
 	g <<= 8;

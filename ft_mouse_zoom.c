@@ -60,29 +60,28 @@ void	ft_keycode_mouse(int keycode, t_mlx *data, int x, int y)
 	}
 	x1 = x;
 	y1 = y;
-	// if (data->fractol == 2)
-	// {
-	// 	data->coord.const_x += (500 - x) / 200;
-	// 	data->coord.const_y += (500 - y) / 200;
-	// }
 	if (keycode == 1)
+	{
 		ft_find_move(data, x, y);
-	if (keycode == 5)
+		data->coord.zoooooom = 1;
+	}
+	if (keycode == 5 && data->coord.zoom < 44494353681901)
 	{
 		ft_change_zoom_pos(data, x1, y1);
 		data->coord.zoom *= 1.1;
+		data->coord.zoooooom = 1;
 	}
-	if (keycode == 4)
+	if (keycode == 4 && data->coord.zoom > 0.000001)
 	{
 		ft_change_zoom_pos(data, x1, y1);
 		data->coord.zoom /= 1.1;
+		data->coord.zoooooom = 1;
 	}
 }
 
 int		mouse_zoom(int button, int x, int y, void *param)
 {
 	static t_mlx		*data;
-	char				*str;
 	
 	data = param;
 	if (!data->coord.narko)
@@ -92,11 +91,11 @@ int		mouse_zoom(int button, int x, int y, void *param)
 		ft_men_fract(data);
 	if (data->fractol == 2)
 		ft_jul_fract(data);
+	if (data->fractol == 3)
+		ft_burn_ship(data);
 	if (!data->coord.narko)
 	{
-		str = ft_itoa_base(data->coord.col, 16, 1);
-		mlx_string_put(data->mlx, data->wnd, 0, 0, data->coord.col, str);
-		free(str);
+		ft_print(data);
 	}
 	return (0);
 }
