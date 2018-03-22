@@ -14,7 +14,8 @@ NAME = ./fractol
 LIBA = libft/libft.a
 SRC = fractol.c ft_jul_fract.c ft_men_fract.c ft_catch_key.c ft_mouse_zoom.c \
 ft_make_col.c ft_make_grad.c ft_mouse_motion.c ft_zoooooom.c ft_keycode_extra.c\
-ft_print.c ft_sets_men.c ft_sets_jul.c ft_extra_f.c ft_make_coord.c
+ft_print.c ft_sets_men.c ft_sets_jul.c ft_extra_f.c ft_make_coord.c \
+ft_set_start.c 
 HEADER = fractol.h
 FL = -Wall -Wextra -Werror
 F_M = -lmlx

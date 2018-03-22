@@ -44,13 +44,12 @@ void		ft_set_data(t_mlx *data, int fractol)
 	data->coord.cent_y = 500;
 	data->coord.narko = 0;
 	data->coord.degree = 1;
-	data->coord.const_x = -0.7;
-	data->coord.const_y = 0.25;
+	ft_fin_set(data, fractol);
+	ft_set_start(data);
 	data->coord.col = 0xFFFFFF;
 	data->coord.background = 0x000000;
 	data->coord.move = 1;
 	data->coord.zoooooom = 1;
-	ft_fin_set(data, fractol);
 }
 
 void		ft_find_fract(t_mlx *data)
