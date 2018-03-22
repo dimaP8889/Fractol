@@ -27,18 +27,15 @@ int		mouse_motion(int x, int y, void *param)
 	static t_mlx		*data;
 	
 	data = param;
+	if (x < 0 || x > 1000 || y < 0 || y > 1000)
+		return (0);
 	data->coord.catch_x = x;
 	data->coord.catch_y = y;
 	if (!data->coord.narko)
 		mlx_clear_window(data->mlx, data->wnd);
-	if (data->coord.move && data->fractol == 2)
+	if (data->coord.move && (data->fractol == 2 || data->fractol == 5))
 		ft_mouse(data, x, y);
-	if (data->fractol == 1)
-		ft_men_fract(data);
-	if (data->fractol == 2)
-		ft_jul_fract(data);
-	if (data->fractol == 3)
-		ft_burn_ship(data);
+	ft_find_fract(data);
 	if (!data->coord.narko)
 	{
 		ft_print(data);

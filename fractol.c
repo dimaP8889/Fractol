@@ -19,10 +19,12 @@ void	ft_print_fract(void)
 	ft_printf("men\n");
 	ft_printf("jul\n");
 	ft_printf("ship\n");
+	ft_printf("tricorn\n");
+	ft_printf("jul_kube\n");
 	exit (1);
 }
 
-int		ft_find_fract(char *fract)
+int		ft_find_type(char *fract)
 {
 	if (!ft_strcmp(fract, "men"))
 		return (1);
@@ -30,6 +32,10 @@ int		ft_find_fract(char *fract)
 		return (2);
 	if (!ft_strcmp(fract, "ship"))
 		return (3);
+	if (!ft_strcmp(fract, "tricorn"))
+		return (4);
+	if (!ft_strcmp(fract, "jul_kube"))
+		return (5);
 	return (0);
 }
 
@@ -79,15 +85,24 @@ void	ft_set_data(t_mlx *data, int fractol)
 	data->fractol = fractol;
 }
 
-void	ft_first_pic(t_mlx *data, int fractol)
+void	ft_find_fract(t_mlx *data)
+{
+	if (data->fractol == 1)
+		ft_men_fract(data);
+	if (data->fractol == 2)
+		ft_jul_fract(data);
+	if (data->fractol == 3)
+		ft_burn_ship(data);
+	if (data->fractol == 4)
+		ft_tricorn_fract(data);
+	if (data->fractol == 5)
+		ft_jul_kube(data);
+}
+
+void	ft_first_pic(t_mlx *data)
 {
 	mlx_clear_window(data->mlx, data->wnd);
-	if (fractol == 1)
-		ft_men_fract(data);
-	if (fractol == 2)
-		ft_jul_fract(data);
-	if (fractol == 3)
-		ft_burn_ship(data);
+	ft_find_fract(data);
 	ft_print(data);
 }
 
@@ -102,12 +117,12 @@ int		main(int ac, char **av)
 	ft_init_image(&data);
 	if (ac != 2)
 		ft_print_fract();
-	fractol = ft_find_fract(av[1]);
+	fractol = ft_find_type(av[1]);
 	if (!fractol)
 		ft_print_fract();
 	if (!check++)
 		ft_set_data(&data, fractol);
-	ft_first_pic(&data, fractol);
+	ft_first_pic(&data);
 	mlx_hook(data.wnd, 2, 5, ft_catch_key, &data);
 	mlx_hook(data.wnd, 4, 0, mouse_zoom, &data);
 	mlx_loop_hook(data.mlx, zoooooom, &data);

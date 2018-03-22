@@ -87,15 +87,8 @@ int		mouse_zoom(int button, int x, int y, void *param)
 	if (!data->coord.narko)
 		mlx_clear_window(data->mlx, data->wnd);
 	ft_keycode_mouse(button, data, x, y);
-	if (data->fractol == 1)
-		ft_men_fract(data);
-	if (data->fractol == 2)
-		ft_jul_fract(data);
-	if (data->fractol == 3)
-		ft_burn_ship(data);
+	ft_find_fract(data);
 	if (!data->coord.narko)
-	{
 		ft_print(data);
-	}
 	return (0);
 }

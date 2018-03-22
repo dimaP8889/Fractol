@@ -95,7 +95,7 @@ void	ft_keycode(int keycode, t_mlx *data)
 	}
 	if (keycode == 49)
 	{
-		if (data->fractol == 3)
+		if (data->fractol == 5)
 			data->fractol = 1;
 		else
 			data->fractol++;
@@ -139,15 +139,8 @@ int		ft_catch_key(int keycode, void *param)
 	if (!data->coord.narko)
 		mlx_clear_window(data->mlx, data->wnd);
 	ft_keycode(keycode, data);
-	if (data->fractol == 1)
-		ft_men_fract(data);
-	if (data->fractol == 2)
-		ft_jul_fract(data);
-	if (data->fractol == 3)
-		ft_burn_ship(data);
+	ft_find_fract(data);
 	if (!data->coord.narko)
-	{
 		ft_print(data);
-	}
 	return (0);
 }

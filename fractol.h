@@ -106,5 +106,8 @@ void	ft_change_zoom_pos(t_mlx *data, int x, int y);
 void	ft_burn_ship(t_mlx *data);
 void	ft_print(t_mlx	*data);
 void	ft_instruct(t_mlx	*data);
+void	ft_find_fract(t_mlx *data);
+void	ft_tricorn_fract(t_mlx *data);
+void	ft_jul_kube(t_mlx *data);
 
 #endif

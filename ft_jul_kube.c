@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tricorn.c                                       :+:      :+:    :+:   */
+/*   ft_jul_kube.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/22 02:23:01 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/22 02:23:02 by dpogrebn         ###   ########.fr       */
+/*   Created: 2018/03/22 02:49:24 by dpogrebn          #+#    #+#             */
+/*   Updated: 2018/03/22 02:49:26 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	*ft_tricorn(void *param)
+void	*ft_jul_k(void *param)
 {
-	double	c_x;
-	double	c_y;
 	double	new_x;
 	double	new_y;
 	double	old_x;
@@ -29,10 +27,15 @@ void	*ft_tricorn(void *param)
 	int		iter;
 	int		i;
 	int		check;
+	double	const_x;
+	double	const_y;
 	t_mult	*data;
 
 	data = param;
+
 	check = 0;
+	const_x = data->const_x;
+	const_y = data->const_y;
 	iter = data->iter;
 	x = data->x0;
 	y = data->y0;
@@ -43,10 +46,8 @@ void	*ft_tricorn(void *param)
 	{
 		while (x < data->x1)
 		{
-			c_x = (x - 500 + data->ch_zoom_x) / (0.5 * zoom * 1000) + move_x;
-			c_y = (y - 500 + data->ch_zoom_y) / (0.5 * zoom * 1000) + move_y;
-			new_x = 0;
-			new_y = 0;
+			new_x = (x - 500 + data->ch_zoom_x) / (0.5 * zoom * 1000) + move_x;
+			new_y = (y - 500 + data->ch_zoom_y) / (0.5 * zoom * 1000) + move_y;
 			old_x = 0;
 			old_y = 0;
 			i = 0;
@@ -55,8 +56,8 @@ void	*ft_tricorn(void *param)
 				old_y = new_y;
 				old_x = new_x;
 
-				new_x = old_x * old_x - old_y * old_y + c_x;
-				new_y = -2 * old_x * old_y + c_y;
+				new_x = tan(old_y * old_y) - tan(old_x * old_x) + const_x;
+				new_y = - 2 * old_x * old_y + const_y;
 				if ((new_x * new_x + new_y * new_y) > 4)
 					break ;
 				i++;
@@ -73,7 +74,7 @@ void	*ft_tricorn(void *param)
 	pthread_exit(0);
 }
 
-void	ft_tricorn_fract(t_mlx *data)
+void	ft_jul_kube(t_mlx *data)
 {
 	pthread_t		tid[8]; 
 	int				i;
@@ -84,7 +85,7 @@ void	ft_tricorn_fract(t_mlx *data)
 		ft_make_coord(&coord[i], data->img.img_mas, data->coord);
 	i = -1;
 	while (++i < 8)
-		pthread_create(&tid[i], NULL, ft_tricorn, &coord[i]);
+		pthread_create(&tid[i], NULL, ft_jul_k, &coord[i]);
 	i = -1;
 	while (++i < 8)
 		pthread_join(tid[i], NULL);
