@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-int		ft_change_b(int i)
+static int		ft_change_b(int i)
 {
 	static int		col;
 
@@ -21,7 +21,7 @@ int		ft_change_b(int i)
 	return (col);
 }
 
-int		ft_find_degree(int i, t_mult *data)
+static int		ft_find_degree(int i, t_mult *data)
 {
 	int		coun;
 
@@ -34,7 +34,7 @@ int		ft_find_degree(int i, t_mult *data)
 	return (i);
 }
 
-int		ft_change_g(int i)
+static int		ft_change_g(int i)
 {
 	static int		col;
 
@@ -44,7 +44,7 @@ int		ft_change_g(int i)
 	return (col);
 }
 
-int		ft_change_r(int i)
+static int		ft_change_r(int i)
 {
 	static int		col;
 
@@ -53,7 +53,7 @@ int		ft_change_r(int i)
 	return (col);
 }
 
-int		ft_make_col(int i, t_mult *data, int check)
+int				ft_make_col(int i, t_mult *data, int check)
 {
 	int		col;
 	int		r;
@@ -75,5 +75,5 @@ int		ft_make_col(int i, t_mult *data, int check)
 	g <<= 8;
 	r <<= 16;
 	col = r | g | b;
-	return(col);
+	return (col);
 }

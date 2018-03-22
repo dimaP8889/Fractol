@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-int		ft_mouse(t_mlx *data, int x, int y)
+static int	ft_mouse(t_mlx *data, int x, int y)
 {
 	if (x > 0 && x < 1000 && y > 0 && y < 1000)
 	{
@@ -22,10 +22,10 @@ int		ft_mouse(t_mlx *data, int x, int y)
 	return (0);
 }
 
-int		mouse_motion(int x, int y, void *param)
+int			mouse_motion(int x, int y, void *param)
 {
 	static t_mlx		*data;
-	
+
 	data = param;
 	if (x < 0 || x > 1000 || y < 0 || y > 1000)
 		return (0);

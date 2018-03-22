@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void	ft_zoooooom(t_mlx *data)
+static void	ft_zoooooom(t_mlx *data)
 {
 	if (data->coord.zoom < 44494353681901)
 	{
@@ -21,10 +21,10 @@ void	ft_zoooooom(t_mlx *data)
 	}
 }
 
-int		zoooooom(void *param)
+int			zoooooom(void *param)
 {
 	static t_mlx		*data;
-	
+
 	data = param;
 	if (!data->coord.narko)
 		mlx_clear_window(data->mlx, data->wnd);

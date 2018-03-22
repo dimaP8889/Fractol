@@ -12,10 +12,11 @@
 
 #include "fractol.h"
 
-void	ft_change_zoom_pos(t_mlx *data, int x, int y)
+void		ft_change_zoom_pos(t_mlx *data, int x, int y)
 {
 	static int	x_cent;
 	static int	y_cent;
+
 	if ((!x_cent && !y_cent) || data->coord.null)
 	{
 		x_cent = 500;
@@ -36,7 +37,7 @@ void	ft_change_zoom_pos(t_mlx *data, int x, int y)
 	x_cent = x;
 }
 
-void	ft_find_move(t_mlx *data, int x, int y)
+static void	ft_find_move(t_mlx *data, int x, int y)
 {
 	if (x > 500)
 		data->coord.move_x += (x - 500) / (500 * data->coord.zoom);
@@ -48,7 +49,7 @@ void	ft_find_move(t_mlx *data, int x, int y)
 		data->coord.move_y -= (500 - y) / (500 * data->coord.zoom);
 }
 
-void	ft_keycode_mouse(int keycode, t_mlx *data, int x, int y)
+static void	ft_keycode_mouse(int keycode, t_mlx *data, int x, int y)
 {
 	static	int	x1;
 	static	int	y1;
@@ -61,28 +62,24 @@ void	ft_keycode_mouse(int keycode, t_mlx *data, int x, int y)
 	x1 = x;
 	y1 = y;
 	if (keycode == 1)
-	{
 		ft_find_move(data, x, y);
-		data->coord.zoooooom = 1;
-	}
 	if (keycode == 5 && data->coord.zoom < 44494353681901)
 	{
 		ft_change_zoom_pos(data, x1, y1);
 		data->coord.zoom *= 1.1;
-		data->coord.zoooooom = 1;
 	}
 	if (keycode == 4 && data->coord.zoom > 0.000001)
 	{
 		ft_change_zoom_pos(data, x1, y1);
 		data->coord.zoom /= 1.1;
-		data->coord.zoooooom = 1;
 	}
+	data->coord.zoooooom = 1;
 }
 
-int		mouse_zoom(int button, int x, int y, void *param)
+int			mouse_zoom(int button, int x, int y, void *param)
 {
 	static t_mlx		*data;
-	
+
 	data = param;
 	if (!data->coord.narko)
 		mlx_clear_window(data->mlx, data->wnd);

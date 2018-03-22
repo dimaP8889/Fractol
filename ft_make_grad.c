@@ -49,9 +49,9 @@ static t_grad	ft_find_delta(int fin_col, int mov, int start_col)
 int				ft_grad(int start_col, t_mult *data, int check, int i)
 {
 	static t_grad		grad;
-	double		r;
-	double		g;
-	double		b;
+	double				r;
+	double				g;
+	double				b;
 
 	if (!check)
 		grad = ft_find_delta(data->col, data->iter, start_col);

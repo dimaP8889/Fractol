@@ -10,75 +10,45 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#define ZM	(0.5 * data->zoom * 1000)
+#define COL	ft_make_col(f.i, data, f.check)
+
 #include "fractol.h"
 
-void	*ft_jul(void *param)
+static void	*ft_jul(void *param)
 {
-	double	new_x;
-	double	new_y;
-	double	old_x;
-	double	old_y;
-	double	zoom;
-	double	move_x;
-	double	move_y;
-	int		color;
-	int		x;
-	int		y;
-	int		iter;
-	int		i;
-	int		check;
-	double	const_x;
-	double	const_y;
+	t_fract	f;
 	t_mult	*data;
 
 	data = param;
-
-	check = 0;
-	const_x = data->const_x;
-	const_y = data->const_y;
-	iter = data->iter;
-	x = data->x0;
-	y = data->y0;
-	zoom = data->zoom;
-	move_x = data->move_x;
-	move_y = data->move_y;
-	while (y < data->y1)
+	f.check = 0;
+	f.x = data->x0 - 1;
+	f.y = data->y0 - 1;
+	f.move_x = data->move_x;
+	f.move_y = data->move_y;
+	while (++f.y < data->y1)
 	{
-		while (x < data->x1)
+		while (++f.x < data->x1)
 		{
-			new_x = (x - 500 + data->ch_zoom_x) / (0.5 * zoom * 1000) + move_x;
-			new_y = (y - 500 + data->ch_zoom_y) / (0.5 * zoom * 1000) + move_y;
-			old_x = 0;
-			old_y = 0;
-			i = 0;
-			while (i < iter)
-			{
-				old_y = new_y;
-				old_x = new_x;
-
-				new_x = old_x * old_x - old_y * old_y + const_x;
-				new_y = 2 * old_x * old_y + const_y;
-				if ((new_x * new_x + new_y * new_y) > 4)
-					break ;
-				i++;
-			}
-			color = (i < iter ? ft_make_col(i, data, check) : data->background);
-			if (i != iter)
-				check = 1;
-			data->img_mas[y * WIDTH + x] = color;
-			x++;
+			f.i = 0;
+			f.c_x = (f.x - 500 + data->ch_zoom_x) / ZM + f.move_x;
+			f.c_y = (f.y - 500 + data->ch_zoom_y) / ZM + f.move_y;
+			f.i = ft_choose(f.i, data, f.c_x, f.c_y);
+			f.color = (f.i < data->iter ? COL : data->background);
+			if (f.i != data->iter)
+				f.check = 1;
+			data->img_mas[f.y * WIDTH + f.x] = f.color;
 		}
-		x = data->x0;
-		y++;
+		f.x = data->x0 - 1;
 	}
 	pthread_exit(0);
 }
 
-void	ft_jul_fract(t_mlx *data)
+void		ft_jul_fract(t_mlx *data)
 {
-	pthread_t		tid[8]; 
+	pthread_t		tid[8];
 	int				i;
-	static t_mult	coord[8];	
+	static t_mult	coord[8];
 
 	i = -1;
 	while (++i < 8)
@@ -89,5 +59,5 @@ void	ft_jul_fract(t_mlx *data)
 	i = -1;
 	while (++i < 8)
 		pthread_join(tid[i], NULL);
-	mlx_put_image_to_window (data->mlx, data->wnd, data->img.img_ptr, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->wnd, data->img.img_ptr, 0, 0);
 }
