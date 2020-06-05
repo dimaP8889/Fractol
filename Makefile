@@ -19,11 +19,11 @@ ft_set_start.c
 HEADER = fractol.h
 FL = -Wall -Wextra -Werror
 F_M = -lmlx
-MLX = /usr/local/lib/
+MLX = ./minilibx
 CC = gcc
 FLAG_FRAME = -framework
 FW = $(FLAG_FRAME) OpenGL $(FLAG_FRAME) AppKit
-M_H = /usr/local/include
+M_H = ./minilibx
 ML = -lpthread
 
 all: $(NAME)
